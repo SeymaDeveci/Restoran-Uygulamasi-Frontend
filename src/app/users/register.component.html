@@ -1,0 +1,58 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="editForm">
+
+    <div class="container col-md-4">
+        <div class="form-group" >
+            <label for="uname" style="margin-bottom: 10px;">
+                <b>Kullanıcı Adı</b>
+            </label>
+            <input class="form-control" type="text" placeholder="Kullanıcı Adı Giriniz"
+            name="uname" required [ngClass]="{'error':isValid('userName')}"  formControlName="userName" style="padding: 12px;">
+        </div>
+        
+        <div class="form-group" style="margin-top: 15px">
+            <label for="fname" style="margin-bottom: 10px;">
+                <b>Ad</b>
+            </label>
+            <input class="form-control" type="text" placeholder="Adınızı Giriniz" name="fname" required 
+            [ngClass]="{'error':isValid('firstName')}"  formControlName="firstName" style="padding: 12px;">
+        </div>
+
+        <div class="form-group" style="margin-top: 15px">
+            <label for="lname" style="margin-bottom: 10px;">
+                <b>Soyad</b>
+            </label>
+            <input class="form-control" type="text" placeholder="Soyadınızı Giriniz" name="lname" required 
+            [ngClass]="{'error':isValid('lastName')}"  formControlName="lastName" style="padding: 12px;">
+        </div>
+
+        <div class="form-group" style="margin-top: 15px">
+            <label for="email" style="margin-bottom: 10px;">
+                <b>E-Posta</b>
+            </label>
+            <input class="form-control" type="text" placeholder="Email Adresinizi Giriniz" name="email" required 
+            [ngClass]="{'error':isValid('email')}" formControlName="email" style="padding: 12px;">
+        </div>
+        
+        <div class="form-group" style="margin-top: 15px">
+            <label for="password" style="margin-bottom: 10px;">
+                <b>Şifre </b>
+            </label>
+            <input class="form-control" type="password" placeholder="Şifre Giriniz" name="password" required 
+            [ngClass]="{'error':isValid('password')}" formControlName="password" style="padding: 12px;">
+        </div>
+
+        <div class="form-group" style="margin-top: 15px"> 
+            <label for="confirmPassword" style="margin-bottom: 10px;">
+                <b>Şifre Doğrulama</b>
+            </label>
+            <input class="form-control" type="password" placeholder="Şifreyi Tekrar Giriniz" name="confirmPassword" required 
+            [ngClass]="{'error':isValid('confirmPassword')}" formControlName="confirmPassword" style="padding: 12px;">
+        </div>
+        
+        <span *ngIf="form.errors?.matchingFields">Şifreler Uyuşmuyor</span>
+        <br/>
+        <button class="btn btn-primary" style="background-color: #04AA6D; border: none; padding: 12px;">Kayıt Ol</button>
+    </div>
+
+
+</form>

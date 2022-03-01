@@ -1,0 +1,49 @@
+<div class="alert alert-info" role="alert">
+    Yemek Sipariş Detayı
+  </div>
+<form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form)">
+    <input type="hidden" name="OrderId" #OrderId="ngModel" [(ngModel)]="formData.OrderId">
+    <input type="hidden" name="OrderItemId" #OrderItemId="ngModel" [(ngModel)]="formData.OrderItemId">
+    <input type="hidden" name="ItemName" #ItemName="ngModel" [(ngModel)]="formData.ItemName">
+    <div class="form-group">
+        <label>Yemek Seçimi</label>
+        <select name="ItemId" #ItemId="ngModel" [(ngModel)]="formData.ItemId" class="form-control" (change)="updatePrice($event)" 
+        [class.is-invalid]="!isValid && formData.ItemId==0">
+            <optgroup label="Lütfen Bir Yemek Seçiniz"></optgroup>
+            <option *ngFor="let item of itemList" value="{{item.itemId}}">{{item.name}}</option>
+        </select>
+    </div>
+    <br/>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Fiyat</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">TL</div>
+                </div>
+                <input name="Price" #Price="ngModel" [(ngModel)]="formData.Price" class="form-control" />
+            </div>
+        </div>
+        <br/>
+        <div class="form-group col-md-6">
+            <label>Miktar</label>
+            <input name="Quantity" type="number" #Quantity="ngModel" [(ngModel)]="formData.Quantity" class="form-control" (keyup)="updateTotal()" 
+            [class.is-invalid]="!isValid && formData.Quantity==0"/>
+        </div>
+        <br/>
+        <div class="form-group col-md-6">
+            <label>Toplam Fiyat</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">TL</div>
+                </div>
+                <input name="Total" #Total="ngModel" [(ngModel)]="formData.Total" class="form-control" readonly/>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Kaydet</button> &nbsp;
+        <button type="submit" class="btn btn-danger" [mat-dialog-close] ><i class="fa fa-window-close"></i>&nbsp;Kapat</button>
+    </div>
+</form>

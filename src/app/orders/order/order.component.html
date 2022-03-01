@@ -1,0 +1,82 @@
+<form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form)">
+    <div class="container">
+        <div class="row row-cols-2">
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label>Sipariş No</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input name="OrderNo" #OrderNo="ngModel" [(ngModel)]="orderModel.orderNo" class="form-control"/>
+                </div>
+            </div>
+            <br>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label>Müşteri</label>
+                <select name="CustomerId" #CustomerId="ngModel" [(ngModel)]="orderModel.customerId" class="form-control" 
+                [class.is-invalid]="!isValid">
+                    <optgroup label="Lütfen Bir Müşteri Seçiniz">
+                        <option *ngFor="let cus of customerList" value="{{cus.customerId}}">{{cus.name}}</option>
+                    </optgroup>
+                </select>
+            </div>
+            <br>
+            <div class="form-group">
+                <label>Ödeme Yöntemi</label>
+                <select name="PaymentMethod" #PaymentMethod="ngModel" [(ngModel)]="orderModel.paymentMethod" class="form-control">
+                    <optgroup label="Lütfen Bir Ödeme Yöntemi Seçiniz">
+                         <option value="nakit">Nakit</option>
+                         <option value="kredikarti">Kredi Kartı</option>
+                    </optgroup>  
+                </select>
+            </div>
+            <br>
+            <div class="form-group">
+                <label>Toplam Tutar</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">TL</div>
+                    </div>
+                    <input name="GrandTotal" #GrandTotal="ngModel" [(ngModel)]="orderModel.grandTotal" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <table class="table table-borderless">
+        <thead class="thead-light">
+          <tr>
+            <th>Yemek</th>
+            <th>Fiyat</th>
+            <th>Miktar</th>
+            <th>Toplam</th>
+            <th>
+                <a class="btn btn-success text-white" (click)="AddOrEditOrderItem(null,orderModel.orderId)">
+                    <i class="fa fa-plus"></i> Sipariş Ekle</a>
+            </th>
+          </tr>
+        </thead>
+            <tbody>
+                <tr *ngIf="orderItemModel.length==0" [class.text-danger]="!isValid && orderItemModel.length==0">
+                    <td class="text-center">
+                        Sipariş edilen kayıt bulunamadı.
+                    </td>
+                </tr>
+                <tr *ngFor="let item of orderItemModel;let i=index;">
+                    <td>{{item.ItemName}}</td>
+                    <td>{{item.Price}}</td>
+                    <td>{{item.Quantity}}</td>
+                    <td>{{item.Total}}</td>
+                    <td>
+                        <a class="btn btn-success text-white" (click)="AddOrEditOrderItem(i,orderModel.orderId)"><i class="fa fa-pencil"></i></a>&nbsp;
+                        <a class="btn btn btn-danger text-white" (click)="DeleteOrderItem(i,orderModel.orderId)"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+    </table>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Kaydet</button>
+        &nbsp; <a class="btn btn-success" routerLink="/orders">
+            <i class="fa fa-list"></i> Sipariş Listesi</a>
+    </div>
+</form>
